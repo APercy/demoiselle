@@ -39,7 +39,7 @@ minetest.register_chatcommand("demoiselle_eject", {
             if parent ~= nil then
                 local entity = parent:get_luaentity()
                 if entity.driver_name == name and entity.name == "demoiselle:demoiselle" then
-                    hidroplane.dettach(entity, player)
+                    demoiselle.dettach(entity, player)
                 else
 			        minetest.chat_send_player(name,colorstring)
                 end
