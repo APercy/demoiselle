@@ -32,7 +32,7 @@ end
 function demoiselle.getLiftAccel(self, velocity, accel, longit_speed, roll, curr_pos)
     --lift calculations
     -----------------------------------------------------------
-    local max_height = 15000
+    local max_height = 7000
     
     local retval = accel
     if longit_speed > 1 then
