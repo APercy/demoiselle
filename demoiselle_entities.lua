@@ -223,14 +223,12 @@ minetest.register_entity("demoiselle:demoiselle", {
                     end
                 end
                 return
-            end
-
-            -- deal with painting or destroying
-		    if itmstck then
-			    if not self.driver and toolcaps and toolcaps.damage_groups
+            else
+                -- deal with painting or destroying
+		        if not self.driver and toolcaps and toolcaps.damage_groups
                         and toolcaps.damage_groups.fleshy and item_name ~= demoiselle.fuel then
-				    --mobkit.hurt(self,toolcaps.damage_groups.fleshy - 1)
-				    --mobkit.make_sound(self,'hit')
+			        --mobkit.hurt(self,toolcaps.damage_groups.fleshy - 1)
+			        --mobkit.make_sound(self,'hit')
                     self.hp_max = self.hp_max - 10
                     minetest.sound_play("collision", {
                         object = self.object,
@@ -240,7 +238,7 @@ minetest.register_entity("demoiselle:demoiselle", {
                         pitch = 1.0,
                     })
                     demoiselle.setText(self)
-			    end
+		        end
             end
 
             if self.hp_max <= 0 then
