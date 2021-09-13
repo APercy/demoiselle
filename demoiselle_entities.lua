@@ -282,6 +282,8 @@ minetest.register_entity("demoiselle:demoiselle", {
                 local is_under_water = demoiselle.check_is_under_water(self.object)
                 if is_under_water then return end
 
+                self._elevator_angle = 0
+                self._rudder_angle = 0
                 demoiselle.attach(self, clicker)
             end
 
