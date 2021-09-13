@@ -305,33 +305,12 @@ function demoiselle.flightstep(self)
     local curr_pos = self.object:get_pos()
     self.object:set_pos(curr_pos)
 
-
     demoiselle.last_time_command = demoiselle.last_time_command + self.dtime
     local player = nil
     if self.driver_name then player = minetest.get_player_by_name(self.driver_name) end
-    local passenger = nil
-    if self._passenger then passenger = minetest.get_player_by_name(self._passenger) end
 
     if player then
         local ctrl = player:get_player_control()
-        ---------------------
-        -- change the driver
-        ---------------------
-        if passenger and demoiselle.last_time_command >= 1 and self._instruction_mode == true then
-            if self._command_is_given == true then
-                if ctrl.sneak or ctrl.jump or ctrl.up or ctrl.down or ctrl.right or ctrl.left then
-                    demoiselle.last_time_command = 0
-                    --take the control
-                    demoiselle.transfer_control(self, false)
-                end
-            else
-                if ctrl.sneak == true and ctrl.jump == true then
-                    demoiselle.last_time_command = 0
-                    --trasnfer the control to student
-                    demoiselle.transfer_control(self, true)
-                end
-            end
-        end
         ----------------------------------
         -- shows the hud for the player
         ----------------------------------
@@ -393,16 +372,22 @@ function demoiselle.flightstep(self)
 
     -- pitch
     local speed_factor = 0
-    if longit_speed > demoiselle.min_speed then speed_factor = (velocity.y * math.rad(2)) end
+    if longit_speed > demoiselle.min_speed + 1 then speed_factor = (velocity.y * math.rad(2)) end
     local newpitch = math.rad(self._angle_of_attack) + speed_factor
 
     -- adjust pitch at ground
     if is_flying == false then --isn't flying?
-        if math.abs(longit_speed) < demoiselle.min_speed then
-            percentage = ((longit_speed * 100)/demoiselle.min_speed)/100
+        if math.abs(longit_speed) < demoiselle.min_speed + 2 then
+            --[[percentage = ((longit_speed * 100)/demoiselle.min_speed)/100
             if newpitch ~= 0 then
                 newpitch = newpitch * percentage
+            end]]--
+            
+            if speed_factor == 0 then
+                self._angle_of_attack = 0
+                new_pitch = math.rad(0)
             end
+
         end
 
         --animate wheels
