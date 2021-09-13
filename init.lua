@@ -2,10 +2,10 @@ demoiselle={}
 demoiselle.fuel = {['biofuel:biofuel'] = 1,['biofuel:bottle_fuel'] = 1,
                 ['biofuel:phial_fuel'] = 0.25, ['biofuel:fuel_can'] = 10}
 demoiselle.gravity = tonumber(minetest.settings:get("movement_gravity")) or 9.8
-demoiselle.wing_angle_of_attack = 3.5
+demoiselle.wing_angle_of_attack = 2.5
 demoiselle.min_speed = 4
 demoiselle.max_engine_acc = 4 --5
-demoiselle.lift = 14 --12
+demoiselle.lift = 15 --12
 
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_global_definitions.lua")
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_crafts.lua")
