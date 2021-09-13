@@ -3,12 +3,12 @@ Minetest 5.4 mod: Demoiselle
 
 The Demoiselle
 
-This is a historic aircraft, the Demoiselle. It was an aircraft developed between 1907 and 1909
+This is an historic aircraft, the Demoiselle. It was an aircraft developed between 1907 and 1909
 by the Brazilian inventor Alberto Santos Dumont. This mod for minetest is a cartooned version
 adapted to the engine, with a fun and slow flight. I hope you have fun exploring the map and
 experiencing the beginnings of aviation. 
 In order to fly, it is necessary to first supply the airplane with biofuel.
-Then with a bottle or gallon selected, punch it against the airplane floater.
+Then with a bottle or gallon selected, punch it against the airplane.
 You can use 5 bottles them to fill the tank. To embark, click with the right button.
 While the machine is off, it is possible to move it using the sneak and jump keys (shift an space).
 W ans S controls the pitch (elevator).
