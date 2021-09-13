@@ -173,7 +173,7 @@ function demoiselle.set_pitch(self, dir, dtime)
 end
 
 function demoiselle.set_yaw(self, dir, dtime)
-    local yaw_factor = 27
+    local yaw_factor = 25
 	if dir == 1 then
 		self._rudder_angle = math.max(self._rudder_angle-yaw_factor*dtime,-demoiselle.rudder_limit)
 	elseif dir == -1 then
@@ -184,7 +184,7 @@ end
 function demoiselle.rudder_auto_correction(self, longit_speed, dtime)
     local factor = 1
     if self._rudder_angle > 0 then factor = -1 end
-    local correction = (demoiselle.rudder_limit*(longit_speed/1500)) * factor * (dtime/demoiselle.ideal_step)
+    local correction = (demoiselle.rudder_limit*(longit_speed/2000)) * factor * (dtime/demoiselle.ideal_step)
     local before_correction = self._rudder_angle
     local new_rudder_angle = self._rudder_angle + correction
     if math.sign(before_correction) ~= math.sign(new_rudder_angle) then
@@ -198,7 +198,7 @@ function demoiselle.elevator_auto_correction(self, longit_speed, dtime)
     local factor = 1
     --if self._elevator_angle > -1.5 then factor = -1 end --here is the "compensator" adjusto to keep it stable
     if self._elevator_angle > 0 then factor = -1 end
-    local correction = (demoiselle.elevator_limit*(longit_speed/10000)) * factor * (dtime/demoiselle.ideal_step)
+    local correction = (demoiselle.elevator_limit*(longit_speed/5000)) * factor * (dtime/demoiselle.ideal_step)
     local before_correction = self._elevator_angle
     local new_elevator_angle = self._elevator_angle + correction
     if math.sign(before_correction) ~= math.sign(new_elevator_angle) then
