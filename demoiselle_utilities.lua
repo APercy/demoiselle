@@ -165,7 +165,7 @@ function demoiselle.destroy(self)
     end
 
     for i=1,4 do
-	    minetest.add_item({x=pos.x+math.random()-0.5,y=pos.y,z=pos.z+math.random()-0.5},'wool:white')
+	    minetest.add_item({x=pos.x+math.random()-0.5,y=pos.y,z=pos.z+math.random()-0.5},'default:wood')
     end
 
     for i=1,6 do
