@@ -114,6 +114,16 @@ function demoiselle.dettachPlayer(self, player)
     -- driver clicked the object => driver gets off the vehicle
     self.driver_name = nil
 
+    if self._engine_running then
+	    self._engine_running = false
+        self.engine:set_animation_frame_speed(0)
+    end
+    -- sound and animation
+    if self.sound_handle then
+        minetest.sound_stop(self.sound_handle)
+        self.sound_handle = nil
+    end
+
     -- detach the player
     player:set_detach()
     player_api.player_attached[name] = nil
@@ -137,6 +147,11 @@ end
 
 -- destroy the boat
 function demoiselle.destroy(self)
+    if self._engine_running then
+	    self._engine_running = false
+        self.engine:set_animation_frame_speed(0)
+    end
+    -- sound and animation
     if self.sound_handle then
         minetest.sound_stop(self.sound_handle)
         self.sound_handle = nil
