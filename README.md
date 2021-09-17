@@ -12,7 +12,7 @@ Then with a bottle or gallon selected, punch it against the airplane.
 You can use 5 bottles them to fill the tank. To embark, click with the right button.
 While the machine is off, it is possible to move it using the sneak and jump keys (shift an space).
 W ans S controls the pitch (elevator).
-Right and Left (A and D) controls the yaw (rudder and ailerons).
+Right and Left (A and D) controls the yaw (rudder).
 
 Then to fly, start the engine with the special key E. Press jump (space)
 to increase the engine power. Set it to the maximum. Pull the elevator control (S)
