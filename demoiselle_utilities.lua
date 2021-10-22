@@ -429,7 +429,7 @@ function demoiselle.flightstep(self)
         local snormal = {x=sdir.z,y=0,z=-sdir.x}	-- rightside, dot is negative
         local prsr = demoiselle.dot(snormal,nhdir)
         local rollfactor = -90
-        local roll_rate = math.rad(25)
+        local roll_rate = math.rad(15)
         newroll = (prsr*math.rad(rollfactor)) * (later_speed * roll_rate) * demoiselle.sign(longit_speed)
         --minetest.chat_send_all('newroll: '.. newroll)
     else
