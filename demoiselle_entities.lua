@@ -90,6 +90,8 @@ minetest.register_entity("demoiselle:demoiselle", {
     static_save = true,
     infotext = "Demoiselle",
     hp_max = 50,
+    shaded = true,
+    show_on_minimap = true,
     buoyancy = 0.25,
     springiness = 0.3,
     physics = demoiselle.physics,
