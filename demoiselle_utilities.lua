@@ -316,9 +316,7 @@ end
 function demoiselle.flightstep(self)
     local velocity = self.object:get_velocity()
     --hack to avoid glitches
-    self.object:set_velocity(velocity)
     local curr_pos = self.object:get_pos()
-    self.object:set_pos(curr_pos)
 
     demoiselle.last_time_command = demoiselle.last_time_command + self.dtime
     local player = nil
@@ -472,7 +470,7 @@ function demoiselle.flightstep(self)
     if accel == nil then accel = {x=0,y=0,z=0} end
 
     --lift calculation
-    accel.y = accel_y --accel.y + mobkit.gravity --accel_y
+    accel.y = accel_y --accel.y
 
     --lets apply some bob in water
 	if self.isinliquid then
@@ -487,11 +485,14 @@ function demoiselle.flightstep(self)
 
     local new_accel = accel
     if longit_speed > 1.5 then
+        
         new_accel = demoiselle.getLiftAccel(self, velocity, new_accel, longit_speed, roll, curr_pos)
     end
     -- end lift
 
     if stop ~= true then
+        self.object:set_pos(curr_pos)
+        self.object:set_velocity(velocity)
         self._last_accell = new_accel
         self.object:set_acceleration(new_accel)
     elseif stop == true then
