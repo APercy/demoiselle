@@ -48,7 +48,7 @@ end
 
 function demoiselle.control(self, dtime, hull_direction, longit_speed, longit_drag,
                             later_speed, later_drag, accel, player, is_flying)
-    if demoiselle.last_time_command > 1 then demoiselle.last_time_command = 1 end
+    if self._last_time_command > 1 then self._last_time_command = 1 end
     --if self.driver_name == nil then return end
     local retval_accel = accel
 
@@ -60,8 +60,8 @@ function demoiselle.control(self, dtime, hull_direction, longit_speed, longit_dr
 		ctrl = player:get_player_control()
 
         --engine and power control
-        if ctrl.aux1 and demoiselle.last_time_command > 0.5 then
-            demoiselle.last_time_command = 0
+        if ctrl.aux1 and self._last_time_command > 0.5 then
+            self._last_time_command = 0
 		    if self._engine_running then
 			    self._engine_running = false
 		        -- sound and animation

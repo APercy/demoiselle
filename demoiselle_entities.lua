@@ -95,6 +95,7 @@ minetest.register_entity("demoiselle:demoiselle", {
     buoyancy = 0.25,
     springiness = 0.3,
     physics = demoiselle.physics,
+    _last_time_command = 1,
     _rudder_angle = 0,
     _acceleration = 0,
     _engine_running = false,

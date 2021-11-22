@@ -318,7 +318,7 @@ function demoiselle.flightstep(self)
     --hack to avoid glitches
     local curr_pos = self.object:get_pos()
 
-    demoiselle.last_time_command = demoiselle.last_time_command + self.dtime
+    self._last_time_command = self._last_time_command + self.dtime
     local player = nil
     if self.driver_name then player = minetest.get_player_by_name(self.driver_name) end
 
@@ -327,8 +327,8 @@ function demoiselle.flightstep(self)
         ----------------------------------
         -- shows the hud for the player
         ----------------------------------
-        if ctrl.up == true and ctrl.down == true and demoiselle.last_time_command >= 1 then
-            demoiselle.last_time_command = 0
+        if ctrl.up == true and ctrl.down == true and self._last_time_command >= 1 then
+            self._last_time_command = 0
             if self._show_hud == true then
                 self._show_hud = false
             else
