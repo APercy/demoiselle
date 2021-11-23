@@ -5,7 +5,7 @@ demoiselle.gravity = tonumber(minetest.settings:get("movement_gravity")) or 9.8
 demoiselle.wing_angle_of_attack = 2.5
 demoiselle.min_speed = 4
 demoiselle.max_engine_acc = 4 --5
-demoiselle.lift = 15 --12
+demoiselle.lift = 16 --12
 
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_global_definitions.lua")
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_crafts.lua")
@@ -14,6 +14,7 @@ dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_fuel_manag
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_custom_physics.lua")
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_utilities.lua")
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_entities.lua")
+dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_forms.lua")
 
 --
 -- helpers and co.

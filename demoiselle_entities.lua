@@ -59,8 +59,8 @@ minetest.register_entity("demoiselle:demoiselle", {
 	initial_properties = {
 	    physical = true,
         collide_with_objects = true,
-	    collisionbox = {-1.2, 0, -1.2, 1.2, 1, 1.2}, --{-1,0,-1, 1,0.3,1},
-	    selectionbox = {-2, 0, -2, 2, 1, 2},
+	    collisionbox = {-1.2, 0, -1.2, 1.2, 2, 1.2}, --{-1,0,-1, 1,0.3,1},
+	    selectionbox = {-2, 0, -2, 2, 2, 2},
 	    visual = "mesh",
         backface_culling = false,
 	    mesh = "demoiselle.b3d",
@@ -267,16 +267,7 @@ minetest.register_entity("demoiselle:demoiselle", {
         if self.owner == name then
             -- pilot section
             if name == self.driver_name then
-                --=========================
-                --  dettach player
-                --=========================
-                demoiselle.dettachPlayer(self, clicker)
-                --[[ sound and animation
-                if self.sound_handle then
-                    minetest.sound_stop(self.sound_handle)
-                    self.sound_handle = nil
-                end
-                self.engine:set_animation_frame_speed(0)]]--
+                demoiselle.pilot_formspec(name)
             elseif not self.driver_name then
                 --=========================
                 --  attach player
