@@ -411,7 +411,7 @@ function demoiselle.flightstep(self)
     end
     
     -- new yaw
-	if math.abs(self._rudder_angle)>5 then
+	if math.abs(self._rudder_angle)>1 then
         local turn_rate = math.rad(14)
         local yaw_turn = self.dtime * math.rad(self._rudder_angle) * turn_rate *
                 demoiselle.sign(longit_speed) * math.abs(longit_speed/2)
