@@ -264,7 +264,7 @@ minetest.register_entity("demoiselle:demoiselle", {
         end
 
         --check if is the owner
-        if self.owner == name then
+        if self.owner == name or minetest.check_player_privs(clicker, {protection_bypass=true}) then
             -- pilot section
             if name == self.driver_name then
                 demoiselle.pilot_formspec(name)
