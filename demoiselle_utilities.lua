@@ -166,8 +166,6 @@ function demoiselle.destroy(self)
     local pos = self.object:get_pos()
     if self.engine then self.engine:remove() end
     if self.pilot_seat_base then self.pilot_seat_base:remove() end
-
-
     if self.stick then self.stick:remove() end
 
     self.object:remove()
@@ -266,7 +264,7 @@ function demoiselle.testImpact(self, velocity, position)
             demoiselle.setText(self)
 
             --minetest.chat_send_all('damage: '.. damage .. ' - hp: ' .. self.hp_max)
-            if self.hp_max < 0 then --if acumulated damage is greater than 50, adieu
+            if self.hp_max <= 0 then --if acumulated damage is greater than 50, adieu
                 demoiselle.destroy(self)
             end
 
@@ -537,9 +535,7 @@ function demoiselle.flightstep(self)
     end
 
     --apply rotations
-	if newyaw~=yaw or newpitch~=pitch or newroll~=roll then
-        self.object:set_rotation({x=newpitch,y=newyaw,z=newroll})
-    end
+    self.object:set_rotation({x=newpitch,y=newyaw,z=newroll})
 
     --adjust elevator pitch (3d model)
     self.object:set_bone_position("empenagem", {x=0, y=33.5, z=-0.5}, {x=-self._elevator_angle/2.5, y=0, z=self._rudder_angle/2.5})
