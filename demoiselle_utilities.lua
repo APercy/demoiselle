@@ -77,6 +77,25 @@ function demoiselle.get_gauge_angle(value, initial_angle)
 	return angle
 end
 
+--returns 0 for old, 1 for new
+function demoiselle.detect_player_api(player)
+    local player_proterties = player:get_properties()
+
+    if player_proterties.mesh == "character.b3d" then
+        local models = player_api.registered_models
+        local character = models["character.b3d"]
+        if character then
+            if character.animations.sit.eye_height then
+                return 1
+            else
+                return 0
+            end
+        end
+    end
+
+    return 0
+end
+
 -- attach player
 function demoiselle.attach(self, player, instructor_mode)
     instructor_mode = instructor_mode or false
@@ -84,14 +103,12 @@ function demoiselle.attach(self, player, instructor_mode)
     self.driver_name = name
 
     -- attach the driver
-    if instructor_mode == true then
-        player:set_attach(self.passenger_seat_base, "", {x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
-        player:set_eye_offset({x = 0, y = -2.5, z = 2}, {x = 0, y = 1, z = -30})
-    else
-        player:set_attach(self.pilot_seat_base, "", {x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
+    player:set_attach(self.pilot_seat_base, "", {x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
+    if demoiselle.detect_player_api(player) == 0 then
         player:set_eye_offset({x = 0, y = -4, z = 2}, {x = 0, y = 1, z = -30})
+    else
+        player:set_eye_offset({x = 0, y = 2, z = 2}, {x = 0, y = 1, z = -30})
     end
-    player:set_eye_offset({x = 0, y = -4, z = 2}, {x = 0, y = 1, z = -30})
     player_api.player_attached[name] = true
     -- make the driver sit
     minetest.after(0.2, function()
