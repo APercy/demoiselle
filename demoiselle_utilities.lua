@@ -80,10 +80,10 @@ end
 --returns 0 for old, 1 for new
 function demoiselle.detect_player_api(player)
     local player_proterties = player:get_properties()
-
-    if player_proterties.mesh == "character.b3d" then
+    local mesh = "character.b3d"
+    if player_proterties.mesh == mesh then
         local models = player_api.registered_models
-        local character = models["character.b3d"]
+        local character = models[mesh]
         if character then
             if character.animations.sit.eye_height then
                 return 1
@@ -111,11 +111,10 @@ function demoiselle.attach(self, player, instructor_mode)
     end
     player_api.player_attached[name] = true
     -- make the driver sit
-    minetest.after(0.2, function()
+    minetest.after(0.3, function()
         player = minetest.get_player_by_name(name)
         if player then
 	        player_api.set_animation(player, "sit")
-            --apply_physics_override(player, {speed=0,gravity=0,jump=0})
         end
     end)
 end
