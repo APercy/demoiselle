@@ -129,7 +129,7 @@ minetest.register_entity("demoiselle:demoiselle", {
             self.driver_name = data.stored_driver_name
             --minetest.debug("loaded: ", self._energy)
         end
-        demoiselle.setText(self)
+        airutils.setText(self, "Demoiselle")
         self.object:set_animation({x = 1, y = 12}, 0, 0, true)
 
         local pos = self.object:get_pos()
@@ -220,7 +220,7 @@ minetest.register_entity("demoiselle:demoiselle", {
                         inv:remove_item("main", stack)
                         self.hp_max = self.hp_max + 10
                         if self.hp_max > 50 then self.hp_max = 50 end
-                        demoiselle.setText(self)
+                        airutils.setText(self,"Demoiselle")
                     else
                         minetest.chat_send_player(puncher:get_player_name(), "You need steel ingots in your inventory to perform this repair.")
                     end
@@ -240,7 +240,7 @@ minetest.register_entity("demoiselle:demoiselle", {
                         fade = 0.0,
                         pitch = 1.0,
                     })
-                    demoiselle.setText(self)
+                    airutils.setText(self, "Demoiselle")
 		        end
             end
 
@@ -273,7 +273,7 @@ minetest.register_entity("demoiselle:demoiselle", {
                 --  attach player
                 --=========================
                 --attach player
-                local is_under_water = demoiselle.check_is_under_water(self.object)
+                local is_under_water = airutils.check_is_under_water(self.object)
                 if is_under_water then return end
 
                 self._elevator_angle = 0
