@@ -6,8 +6,11 @@ dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_global_def
 
 function demoiselle.getPlaneFromPlayer(player)
     local seat = player:get_attach()
-    local plane = seat:get_attach()
-    return plane
+    if seat then
+        local plane = seat:get_attach()
+        return plane
+    end
+    return nil
 end
 
 function demoiselle.pilot_formspec(name)
@@ -26,17 +29,19 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname == "demoiselle:pilot_main" then
         local name = player:get_player_name()
         local plane_obj = demoiselle.getPlaneFromPlayer(player)
-        local ent = plane_obj:get_luaentity()
-        if fields.hud then
-            if ent._show_hud == true then
-                ent._show_hud = false
-            else
-                ent._show_hud = true
+        if plane_obj then
+            local ent = plane_obj:get_luaentity()
+            if fields.hud then
+                if ent._show_hud == true then
+                    ent._show_hud = false
+                else
+                    ent._show_hud = true
+                end
             end
+		    if fields.go_out then
+                demoiselle.dettachPlayer(ent, player)
+		    end
         end
-		if fields.go_out then
-            demoiselle.dettachPlayer(ent, player)
-		end
         minetest.close_formspec(name, "demoiselle:pilot_main")
     end
 end)
