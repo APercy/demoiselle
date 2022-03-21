@@ -229,7 +229,7 @@ minetest.register_entity("demoiselle:demoiselle", {
             else
                 -- deal with painting or destroying
 		        if not self.driver and toolcaps and toolcaps.damage_groups
-                        and toolcaps.damage_groups.fleshy and item_name ~= demoiselle.fuel then
+                        and toolcaps.damage_groups.fleshy and item_name ~= airutils.fuel then
 			        --mobkit.hurt(self,toolcaps.damage_groups.fleshy - 1)
 			        --mobkit.make_sound(self,'hit')
                     self.hp_max = self.hp_max - 10

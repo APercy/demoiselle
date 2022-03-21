@@ -17,7 +17,7 @@ function demoiselle.loadFuel(self, player_name)
     local item_name = ""
     if itmstck then item_name = itmstck:get_name() end
 
-    local fuel = demoiselle.contains(demoiselle.fuel, item_name)
+    local fuel = demoiselle.contains(airutils.fuel, item_name)
     if fuel then
         local stack = ItemStack(item_name .. " 1")
 
