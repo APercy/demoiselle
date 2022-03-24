@@ -1,9 +1,9 @@
 demoiselle={}
 
 demoiselle.gravity = tonumber(minetest.settings:get("movement_gravity")) or 9.8
-demoiselle.wing_angle_of_attack = 2.5
+demoiselle.wing_angle_of_attack = 2
 demoiselle.min_speed = 4
-demoiselle.max_engine_acc = 4 --5
+demoiselle.max_engine_acc = 4.5 --5
 demoiselle.lift = 16 --12
 
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_global_definitions.lua")

@@ -156,7 +156,7 @@ function demoiselle.set_pitch(self, dir, dtime)
 	if dir == -1 then
 		self._elevator_angle = math.max(self._elevator_angle-pitch_factor*dtime,-demoiselle.elevator_limit)
 	elseif dir == 1 then
-        if self._angle_of_attack < 0 then pitch_factor = 1 end --lets reduce the command power to avoid accidents
+        if self._angle_of_attack < 0 then pitch_factor = 2 end --lets reduce the command power to avoid accidents
 		self._elevator_angle = math.min(self._elevator_angle+pitch_factor*dtime,demoiselle.elevator_limit)
 	end
 end
@@ -187,7 +187,7 @@ function demoiselle.elevator_auto_correction(self, longit_speed, dtime)
     local factor = 1
     --if self._elevator_angle > -1.5 then factor = -1 end --here is the "compensator" adjusto to keep it stable
     if self._elevator_angle > 0 then factor = -1 end
-    local correction = (demoiselle.elevator_limit*(longit_speed/5000)) * factor * (dtime/demoiselle.ideal_step)
+    local correction = (demoiselle.elevator_limit*(longit_speed/3000)) * factor * (dtime/demoiselle.ideal_step)
     local before_correction = self._elevator_angle
     local new_elevator_angle = self._elevator_angle + correction
     if math.sign(before_correction) ~= math.sign(new_elevator_angle) then
