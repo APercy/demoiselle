@@ -401,7 +401,7 @@ function demoiselle.flightstep(self)
 
     if stop ~= true then
         self.object:move_to(curr_pos)
-        self.object:set_velocity(velocity)
+        --self.object:set_velocity(velocity)
         self._last_accell = new_accel
         self.object:set_acceleration(self.object:get_acceleration())
         self.object:set_acceleration(new_accel)
