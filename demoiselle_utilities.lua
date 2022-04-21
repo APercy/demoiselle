@@ -26,8 +26,7 @@ function demoiselle.get_gauge_angle(value, initial_angle)
 end
 
 -- attach player
-function demoiselle.attach(self, player, instructor_mode)
-    instructor_mode = instructor_mode or false
+function demoiselle.attach(self, player)
     local name = player:get_player_name()
     self.driver_name = name
 
@@ -214,7 +213,7 @@ function demoiselle.checkattachBug(self)
         local player = minetest.get_player_by_name(self.owner)
         if player then
 		    if player:get_hp() > 0 then
-                demoiselle.attach(self, player, self._instruction_mode)
+                demoiselle.attach(self, player)
             else
                 demoiselle.dettachPlayer(self, player)
 		    end
@@ -403,7 +402,9 @@ function demoiselle.flightstep(self)
         self.object:move_to(curr_pos)
         --self.object:set_velocity(velocity)
         self._last_accell = new_accel
-        self.object:set_acceleration(self.object:get_acceleration())
+        if player then
+            demoiselle.attach(self, player)
+        end
         self.object:set_acceleration(new_accel)
     elseif stop == true then
         self.object:set_velocity({x=0,y=0,z=0})
