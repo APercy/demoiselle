@@ -276,6 +276,10 @@ function demoiselle.flightstep(self)
 
     local is_attached = demoiselle.checkAttach(self, player)
 
+    if longit_speed == 0 and is_flying == false and is_attached == false and self._engine_running == false then
+        return
+    end
+
     --ajustar angulo de ataque
     local percentage = math.abs(((longit_speed * 100)/(demoiselle.min_speed + 5))/100)
     if percentage > 1.5 then percentage = 1.5 end
