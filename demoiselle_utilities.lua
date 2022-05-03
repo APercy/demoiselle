@@ -276,6 +276,11 @@ function demoiselle.flightstep(self)
 
     local is_attached = demoiselle.checkAttach(self, player)
 
+	if not is_attached then
+        -- for some engine error the player can be detached from the machine, so lets set him attached again
+        demoiselle.checkattachBug(self)
+    end
+
     if longit_speed == 0 and is_flying == false and is_attached == false and self._engine_running == false then
         return
     end
@@ -356,11 +361,6 @@ function demoiselle.flightstep(self)
 
     ---------------------------------
     -- end roll
-
-	if not is_attached then
-        -- for some engine error the player can be detached from the machine, so lets set him attached again
-        demoiselle.checkattachBug(self)
-    end
 
     local pilot = player
     if self._command_is_given and passenger then
