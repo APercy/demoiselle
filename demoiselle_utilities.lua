@@ -150,7 +150,9 @@ function demoiselle.testImpact(self, velocity, position)
     --minetest.chat_send_all('impact: '.. impact .. ' - hp: ' .. self.hp_max)
     if impact > 2 then
         --minetest.chat_send_all('impact: '.. impact .. ' - hp: ' .. self.hp_max)
-		collision = self.colinfo.collides
+        if self.colinfo then
+            collision = self.colinfo.collides
+        end
     end
 
     if collision then
