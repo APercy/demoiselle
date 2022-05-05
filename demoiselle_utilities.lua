@@ -374,6 +374,7 @@ function demoiselle.flightstep(self)
 
     --lets apply some bob in water
 	if self.isinliquid then
+        self._engine_running = false
         local bob = demoiselle.minmax(demoiselle.dot(accel,hull_direction),0.4)	-- vertical bobbing
         accel.y = accel.y + bob
         local max_pitch = 6
