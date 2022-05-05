@@ -39,7 +39,7 @@ function demoiselle.attach(self, player)
     end
     player_api.player_attached[name] = true
     -- make the driver sit
-    minetest.after(0.3, function()
+    minetest.after(1, function()
         player = minetest.get_player_by_name(name)
         if player then
 	        player_api.set_animation(player, "sit")
@@ -394,9 +394,9 @@ function demoiselle.flightstep(self)
         self.object:move_to(curr_pos)
         --self.object:set_velocity(velocity)
         self._last_accell = new_accel
-        if player then
+        --[[if player then
             demoiselle.attach(self, player)
-        end
+        end]]--
         self.object:set_acceleration(new_accel)
     elseif stop == true then
         self.object:set_velocity({x=0,y=0,z=0})
