@@ -162,7 +162,7 @@ function demoiselle.control(self, dtime, hull_direction, longit_speed, longit_dr
 end
 
 function demoiselle.set_pitch(self, dir, dtime)
-    local pitch_factor = 10
+    local pitch_factor = 15
 	if dir == -1 then
 		self._elevator_angle = math.max(self._elevator_angle-pitch_factor*dtime,-demoiselle.elevator_limit)
 	elseif dir == 1 then
@@ -172,7 +172,7 @@ function demoiselle.set_pitch(self, dir, dtime)
 end
 
 function demoiselle.set_pitch_by_mouse(self, dir)
-	self._elevator_angle = -(dir * demoiselle.elevator_limit)/360
+	self._elevator_angle = -(dir * demoiselle.elevator_limit)/270
 end
 
 function demoiselle.set_yaw(self, dir, dtime)
