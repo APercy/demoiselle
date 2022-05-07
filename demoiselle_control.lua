@@ -121,13 +121,23 @@ function demoiselle.control(self, dtime, hull_direction, longit_speed, longit_dr
 
         --pitch
         local pitch_cmd = 0
-        if ctrl.up then pitch_cmd = 1 elseif ctrl.down then pitch_cmd = -1 end
-        demoiselle.set_pitch(self, pitch_cmd, dtime)
+        if self._pitch_by_mouse == true then
+		    local rot_x = math.deg(player:get_look_vertical())
+            demoiselle.set_pitch_by_mouse(self, rot_x)
+        else
+            if ctrl.up then pitch_cmd = 1 elseif ctrl.down then pitch_cmd = -1 end
+            demoiselle.set_pitch(self, pitch_cmd, dtime)
+        end
 
 		-- yaw
         local yaw_cmd = 0
-        if ctrl.right then yaw_cmd = 1 elseif ctrl.left then yaw_cmd = -1 end
-        demoiselle.set_yaw(self, yaw_cmd, dtime)
+        if self._yaw_by_mouse == true then
+		    local rot_y = math.deg(player:get_look_horizontal())
+            demoiselle.set_yaw_by_mouse(self, rot_y)
+        else
+            if ctrl.right then yaw_cmd = 1 elseif ctrl.left then yaw_cmd = -1 end
+            demoiselle.set_yaw(self, yaw_cmd, dtime)
+        end
 
         --I'm desperate, center all!
         if ctrl.right and ctrl.left then
@@ -161,6 +171,10 @@ function demoiselle.set_pitch(self, dir, dtime)
 	end
 end
 
+function demoiselle.set_pitch_by_mouse(self, dir)
+	self._elevator_angle = -(dir * demoiselle.elevator_limit)/360
+end
+
 function demoiselle.set_yaw(self, dir, dtime)
     local yaw_factor = 25
 	if dir == 1 then
@@ -168,6 +182,28 @@ function demoiselle.set_yaw(self, dir, dtime)
 	elseif dir == -1 then
 		self._rudder_angle = math.min(self._rudder_angle+yaw_factor*dtime,demoiselle.rudder_limit)
 	end
+end
+
+function demoiselle.set_yaw_by_mouse(self, dir)
+    local rotation = self.object:get_rotation()
+    local rot_y = math.deg(rotation.y)
+    
+    local total = math.abs(math.floor(rot_y/360))
+
+    if rot_y < 0 then rot_y = rot_y + (360*total) end
+    if rot_y > 360 then rot_y = rot_y - (360*total) end
+
+    local command = rot_y - dir
+    if command < -180 then command = command + 360 
+    elseif command > 180 then command = command - 360 end
+    --minetest.chat_send_all("rotation y: "..rot_y.." - dir: "..dir.." - command: "..command)
+    
+    if command > 80 then command = 80 end
+    if command < -80 then command = -80 end
+
+    --minetest.chat_send_all("rotation y: "..rot_y.." - dir: "..dir.." - command: "..command)
+
+	self._rudder_angle = (-command * demoiselle.rudder_limit)/90
 end
 
 function demoiselle.rudder_auto_correction(self, longit_speed, dtime)
