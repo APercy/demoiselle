@@ -261,7 +261,9 @@ function demoiselle.flightstep(self)
 
     local node_bellow = mobkit.nodeatpos(mobkit.pos_shift(curr_pos,{y=-0.1}))
     local is_flying = true
-    if node_bellow and node_bellow.drawtype ~= 'airlike' then is_flying = false end
+    if self.colinfo then
+        is_flying = not self.colinfo.touching_ground
+    end
     --if is_flying then minetest.chat_send_all('is flying') end
 
     local is_attached = demoiselle.checkAttach(self, player)
@@ -276,24 +278,32 @@ function demoiselle.flightstep(self)
     end
 
     --ajustar angulo de ataque
-    local percentage = math.abs(((longit_speed * 100)/(demoiselle.min_speed + 5))/100)
-    if percentage > 1.5 then percentage = 1.5 end
-    self._angle_of_attack = self._angle_of_attack - ((self._elevator_angle / 20)*percentage)
-    if self._angle_of_attack < -0.5 then
-        self._angle_of_attack = -0.1
-        self._elevator_angle = self._elevator_angle - 0.1
-    end --limiting the negative angle]]--
-    if self._angle_of_attack > 20 then
-        self._angle_of_attack = 20
-        self._elevator_angle = self._elevator_angle + 0.1
-    end --limiting the very high climb angle due to strange behavior]]--
+    if longit_speed then
+        local percentage = math.abs(((longit_speed * 100)/(demoiselle.min_speed + 5))/100)
+        if percentage > 1.5 then percentage = 1.5 end
+        self._angle_of_attack = self._angle_of_attack - ((self._elevator_angle / 20)*percentage)
+        if self._angle_of_attack < -0.5 then
+            self._angle_of_attack = -0.1
+            self._elevator_angle = self._elevator_angle - 0.1
+        end --limiting the negative angle]]--
+        if self._angle_of_attack > 20 then
+            self._angle_of_attack = 20
+            self._elevator_angle = self._elevator_angle + 0.1
+        end --limiting the very high climb angle due to strange behavior]]--
+
+        --set the plane on level
+        if airutils.adjust_attack_angle_by_speed then
+            self._angle_of_attack = airutils.adjust_attack_angle_by_speed(self._angle_of_attack, 2.7, 5, 30, longit_speed, demoiselle.ideal_step, self.dtime)
+        end
+    end
 
     --minetest.chat_send_all(self._angle_of_attack)
 
     -- pitch
-    local speed_factor = 0
-    if longit_speed > demoiselle.min_speed + 1 then speed_factor = (velocity.y * math.rad(2)) end
-    local newpitch = math.rad(self._angle_of_attack) + speed_factor
+    local newpitch = math.rad(0)
+    if airutils.get_plane_pitch then
+        newpitch = airutils.get_plane_pitch(velocity, longit_speed, demoiselle.min_speed, self._angle_of_attack)
+    end
 
     -- adjust pitch at ground
     if is_flying == false then --isn't flying?
