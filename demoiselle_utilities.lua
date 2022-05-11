@@ -466,6 +466,14 @@ function demoiselle.flightstep(self)
         end
     end
 
+    if is_flying == false then
+        -- new yaw
+        local turn_rate = math.rad(30)
+        local yaw_turn = self.dtime * math.rad(self._rudder_angle) * turn_rate *
+                    demoiselle.sign(longit_speed) * math.abs(longit_speed/2)
+	    newyaw = yaw + yaw_turn
+    end
+
     --apply rotations
     self.object:set_rotation({x=newpitch,y=newyaw,z=newroll})
 
