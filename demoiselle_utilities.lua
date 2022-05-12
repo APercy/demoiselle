@@ -428,17 +428,11 @@ function demoiselle.flightstep(self)
     end
 
     --in a command compression during a dive, force the control to recover
-    local longit_initial_speed = 11
+    local longit_initial_speed = 10
     --minetest.chat_send_all(longit_speed)
     if longit_speed > longit_initial_speed and climb_rate < 0 and is_flying then
         local recover_command = -0.2
-        if ctrl then
-            if not ctrl.up then
-                self._elevator_angle = recover_command
-            end
-        else
-            self._elevator_angle = recover_command
-        end
+        self._elevator_angle = recover_command
     end
 
     --is an stall, force a recover
