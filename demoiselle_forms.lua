@@ -15,7 +15,7 @@ end
 
 function demoiselle.pilot_formspec(name)
     local player = minetest.get_player_by_name(name)
-    local plane_obj = pa28.getPlaneFromPlayer(player)
+    local plane_obj = demoiselle.getPlaneFromPlayer(player)
     if plane_obj == nil then
         return
     end
