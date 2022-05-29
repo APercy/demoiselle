@@ -119,7 +119,7 @@ minetest.register_entity("demoiselle:demoiselle", {
     end,
 
 	on_activate = function(self, staticdata, dtime_s)
-        mobkit.actfunc(self, staticdata, dtime_s)
+        airutils.actfunc(self, staticdata, dtime_s)
         if staticdata ~= "" and staticdata ~= nil then
             local data = minetest.deserialize(staticdata) or {}
             self._energy = data.stored_energy
@@ -147,11 +147,11 @@ minetest.register_entity("demoiselle:demoiselle", {
 		self.object:set_armor_groups({immortal=1})
 	end,
 
-    --on_step = mobkit.stepfunc,
+    --on_step = airutils.stepfunc,
     on_step = function(self,dtime,colinfo)
 	    self.dtime = math.min(dtime,0.2)
 	    self.colinfo = colinfo
-	    self.height = mobkit.get_box_height(self)
+	    self.height = airutils.get_box_height(self)
 	    
     --  physics comes first
 	    local vel = self.object:get_velocity()
@@ -230,8 +230,8 @@ minetest.register_entity("demoiselle:demoiselle", {
                 -- deal with painting or destroying
 		        if not self.driver and toolcaps and toolcaps.damage_groups
                         and toolcaps.damage_groups.fleshy and item_name ~= airutils.fuel then
-			        --mobkit.hurt(self,toolcaps.damage_groups.fleshy - 1)
-			        --mobkit.make_sound(self,'hit')
+			        --airutils.hurt(self,toolcaps.damage_groups.fleshy - 1)
+			        --airutils.make_sound(self,'hit')
                     self.hp_max = self.hp_max - 10
                     minetest.sound_play("collision", {
                         object = self.object,

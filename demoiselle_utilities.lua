@@ -138,7 +138,7 @@ function demoiselle.testImpact(self, velocity, position)
     if self._last_vel == nil then return end
     --lets calculate the vertical speed, to avoid the bug on colliding on floor with hard lag
     if abs(velocity.y - self._last_vel.y) > 2 then
-		local noded = mobkit.nodeatpos(mobkit.pos_shift(p,{y=-2.8}))
+		local noded = airutils.nodeatpos(airutils.pos_shift(p,{y=-2.8}))
 	    if (noded and noded.drawtype ~= 'airlike') then
 		    collision = true
 	    else
@@ -245,7 +245,7 @@ function demoiselle.flightstep(self)
     if newroll > 360 then newroll = newroll - 360 end
     if newroll < -360 then newroll = newroll + 360 end
 
-    local hull_direction = mobkit.rot_to_dir(rotation) --minetest.yaw_to_dir(yaw)
+    local hull_direction = airutils.rot_to_dir(rotation) --minetest.yaw_to_dir(yaw)
     local nhdir = {x=hull_direction.z,y=0,z=-hull_direction.x}		-- lateral unit vector
 
     local longit_speed = vector.dot(velocity,hull_direction)
@@ -259,7 +259,7 @@ function demoiselle.flightstep(self)
     local accel = vector.add(longit_drag,later_drag)
     local stop = false
 
-    local node_bellow = mobkit.nodeatpos(mobkit.pos_shift(curr_pos,{y=-0.1}))
+    local node_bellow = airutils.nodeatpos(airutils.pos_shift(curr_pos,{y=-0.1}))
     local is_flying = true
     if self.colinfo then
         is_flying = not self.colinfo.touching_ground
