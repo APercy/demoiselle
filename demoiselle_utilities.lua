@@ -42,8 +42,8 @@ function demoiselle.attach(self, player)
     minetest.after(1, function()
         player = minetest.get_player_by_name(name)
         if player then
+	        player_api.set_animation(player, "sit")
             airutils.sit(player)
-	        --player_api.set_animation(player, "sit")
         end
     end)
 end
