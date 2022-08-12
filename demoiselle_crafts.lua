@@ -42,7 +42,7 @@ minetest.register_craftitem("demoiselle:demoiselle", {
 -- crafting
 --
 
-if minetest.get_modpath("default") then
+if not minetest.settings:get_bool('demoiselle.disable_craftitems') and minetest.get_modpath("default") then
 	minetest.register_craft({
 		output = "demoiselle:wings",
 		recipe = {
