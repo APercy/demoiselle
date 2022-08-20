@@ -306,21 +306,8 @@ function demoiselle.flightstep(self)
         newpitch = airutils.get_plane_pitch(velocity, longit_speed, demoiselle.min_speed, self._angle_of_attack)
     end
 
-    -- adjust pitch at ground
+    -- wheels
     if is_flying == false then --isn't flying?
-        if math.abs(longit_speed) < demoiselle.min_speed + 2 then
-            --[[percentage = ((longit_speed * 100)/demoiselle.min_speed)/100
-            if newpitch ~= 0 then
-                newpitch = newpitch * percentage
-            end]]--
-            
-            if speed_factor == 0 then
-                self._angle_of_attack = 0
-                new_pitch = math.rad(0)
-            end
-
-        end
-
         --animate wheels
         self.object:set_animation_frame_speed(longit_speed * 10)
     else
@@ -328,6 +315,30 @@ function demoiselle.flightstep(self)
         self.object:set_animation_frame_speed(0)
     end
     
+    -- adjust pitch at ground (got from supercub, I have to put it in lib in future)
+    if is_flying == false then
+        local tail_lift_min_speed = demoiselle.min_speed
+        local tail_lift_max_speed = tail_lift_min_speed + 1
+        local tail_angle = 0
+        if math.abs(longit_speed) > tail_lift_min_speed then
+            if math.abs(longit_speed) < tail_lift_max_speed then
+                --minetest.chat_send_all(math.abs(longit_speed))
+                local speed_range = tail_lift_max_speed - tail_lift_min_speed
+                percentage = 1-((math.abs(longit_speed) - tail_lift_min_speed)/speed_range)
+                if percentage > 1 then percentage = 1 end
+                if percentage < 0 then percentage = 0 end
+                local angle = tail_angle * percentage
+                local calculated_newpitch = math.rad(angle)
+                if newpitch < calculated_newpitch then newpitch = calculated_newpitch end --ja aproveita o pitch atual se ja estiver cerrto
+                if newpitch > math.rad(tail_angle) then newpitch = math.rad(tail_angle) end --não queremos arrastar o cauda no chão
+            end
+        else
+            if math.abs(longit_speed) < tail_lift_min_speed then
+                newpitch = math.rad(tail_angle)
+            end
+        end
+    end
+
     -- new yaw
 	if math.abs(self._rudder_angle)>1 then
         local turn_rate = math.rad(14)
