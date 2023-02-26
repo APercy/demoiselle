@@ -405,7 +405,7 @@ function demoiselle.flightstep(self)
     local new_accel = accel
     if longit_speed > 1.5 then
         
-        new_accel = airutils.getLiftAccel(self, velocity, new_accel, longit_speed, roll, curr_pos, demoiselle.lift, 7000)
+        new_accel = airutils.getLiftAccel(self, velocity, new_accel, longit_speed, roll, curr_pos, demoiselle.lift, 5500)
     end
     -- end lift
 
