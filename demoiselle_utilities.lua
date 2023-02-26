@@ -409,6 +409,12 @@ function demoiselle.flightstep(self)
     end
     -- end lift
 
+    --wind effects
+    if longit_speed > 1.5 then
+        local wind = airutils.get_wind(curr_pos, 0.2)
+        new_accel = vector.add(new_accel, wind)
+    end
+
     if stop ~= true then
         self.object:move_to(curr_pos)
         --self.object:set_velocity(velocity)
