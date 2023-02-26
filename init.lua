@@ -5,7 +5,7 @@ demoiselle.wing_angle_of_attack = 2
 demoiselle.min_speed = 3
 demoiselle.max_speed = 6
 demoiselle.max_engine_acc = 5
-demoiselle.lift = 16 --12
+demoiselle.lift = 14 --12
 
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_global_definitions.lua")
 dofile(minetest.get_modpath("demoiselle") .. DIR_DELIM .. "demoiselle_crafts.lua")
