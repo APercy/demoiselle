@@ -134,29 +134,53 @@ function demoiselle.destroy(self)
 end
 
 function demoiselle.testImpact(self, velocity, position)
+    if self._last_accell == nil then return end
     local p = position --self.object:get_pos()
     local collision = false
+    local low_node_pos = -0.2
     if self._last_vel == nil then return end
     --lets calculate the vertical speed, to avoid the bug on colliding on floor with hard lag
     if abs(velocity.y - self._last_vel.y) > 2 then
-        local low_node_pos = -0.2
 		local noded = airutils.nodeatpos(airutils.pos_shift(p,{y=low_node_pos}))
 	    if (noded and noded.drawtype ~= 'airlike') then
 		    collision = true
 	    else
             self.object:set_velocity(self._last_vel)
-            self.object:set_velocity(vector.add(velocity, vector.multiply(self._last_accell, self.dtime/8)))
             --self.object:set_acceleration(self._last_accell)
+            self.object:set_velocity(vector.add(velocity, vector.multiply(self._last_accell, self.dtime/8)))
         end
     end
     local impact = abs(demoiselle.get_hipotenuse_value(velocity, self._last_vel))
     --minetest.chat_send_all('impact: '.. impact .. ' - hp: ' .. self.hp_max)
     if impact > 2 then
-        --minetest.chat_send_all('impact: '.. impact .. ' - hp: ' .. self.hp_max)
         if self.colinfo then
             collision = self.colinfo.collides
         end
     end
+
+    --damage by speed
+    --[[if self._last_speed_damage_time == nil then self._last_speed_damage_time = 0 end
+    self._last_speed_damage_time = self._last_speed_damage_time + self.dtime
+    if self._last_speed_damage_time > 2 then self._last_speed_damage_time = 2 end
+    if self._longit_speed > 14.7 and self._last_speed_damage_time >= 2 then
+        self._last_speed_damage_time = 0
+        minetest.sound_play("demoiselle_collision", {
+            --to_player = self.driver_name,
+            object = self.object,
+            max_hear_distance = 15,
+            gain = 1.0,
+            fade = 0.0,
+            pitch = 1.0,
+        }, true)
+        self.hp_max = self.hp_max - 5
+        if self.driver_name then
+            local player_name = self.driver_name
+            airutils.setText(self, "Demoiselle")
+        end
+        if self.hp_max < 0 then --if acumulated damage is greater than 50, adieu
+            demoiselle.destroy(self)
+        end
+    end]]--
 
     if collision then
         --self.object:set_velocity({x=0,y=0,z=0})
@@ -170,6 +194,10 @@ function demoiselle.testImpact(self, velocity, position)
             fade = 0.0,
             pitch = 1.0,
         }, true)
+        if damage > 5 then
+            self._power_lever = 0
+            self._engine_running = false
+        end
 
         if self.driver_name then
             local player_name = self.driver_name
@@ -231,7 +259,7 @@ function demoiselle.flightstep(self)
     end
 
     local accel_y = self.object:get_acceleration().y
-    local rotation = self.object:get_rotation()
+    local rotation = airutils.normalize_rotations(self.object:get_rotation())
     local yaw = rotation.y
 	local newyaw=yaw
     local pitch = rotation.x
