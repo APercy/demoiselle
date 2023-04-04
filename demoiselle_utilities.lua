@@ -316,7 +316,8 @@ function demoiselle.flightstep(self)
 
         --set the plane on level
         if airutils.adjust_attack_angle_by_speed then
-            self._angle_of_attack = airutils.adjust_attack_angle_by_speed(self._angle_of_attack, 2.7, 5, 30, longit_speed, demoiselle.ideal_step, self.dtime)
+            --adjust_attack_angle_by_speed(angle_of_attack, min_angle, max_angle, limit, longit_speed, ideal_step, dtime)
+            self._angle_of_attack = airutils.adjust_attack_angle_by_speed(self._angle_of_attack, 1.5, 5, 40, longit_speed, demoiselle.ideal_step, self.dtime)
         end
     end
 
