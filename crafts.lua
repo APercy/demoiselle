@@ -9,7 +9,7 @@ minetest.register_craftitem("demoiselle:body",{
 	inventory_image = "demoiselle_body.png",
 })
 
--- trike
+-- demoiselle
 minetest.register_craftitem("demoiselle:demoiselle", {
 	description = "Demoiselle",
 	inventory_image = "demoiselle.png",
